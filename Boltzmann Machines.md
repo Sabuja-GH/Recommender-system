@@ -1,16 +1,18 @@
-Nodes- hidden ,visible , all neurons/ nodes are interconnected
-No output layer
-Higher the energy of any state then lower the probability of our system to be in  that state Boltzmann distribution formula
+# Boltzmann Machines
 
-(EBM)energy-based model weight adjusted so that the system remains at its lowest energy state as per Boltzman equation 
+    Nodes- hidden, visible , all neurons/nodes are interconnected. No output layer.
+<img align="Center" height="330px"  src="https://user-images.githubusercontent.com/85345738/138544834-f4995292-4551-400f-8be1-adf0408a8f91.png" />
 
-Full Boltzmann machine is hard to implement because so many nodes and so many connections make it hard
-Restricted Boltzmann machines
+Higher the energy of any state then lower the probability of our system to be in that state, Boltzmann distribution formula.
+
+(EBM)energy-based model weight adjusted so that the system remains at its lowest energy state as per Boltzman equation. 
+
+Full Boltzmann machine is hard to implement because so many nodes and so many connections make it hard, so instead we use **Restricted Boltzmann machines**(RBMs).
 
 In RBM hidden and visible nodes are not connected to each other
+<img align="Center" height="250px"  src="https://user-images.githubusercontent.com/85345738/138545055-cfc0615c-158c-45e7-a048-fe1e235f9544.png" />
 
-Our specific model rather than a model for other systems or in general 
-Movie recommender system
+Movie recommender system- Our model is specific to single sysem rather than a model for other systems or in general. 
 
 From the inputs(visible nodes) of our data the hidden nodes, the RBM will find out features that have a higher say in the person movie taste( like genre, Oscars, director etc) and so are the weight-adjusted.
 
@@ -33,9 +35,9 @@ At last, we are trying to adjust the energy curve(energy vs dataspace) by modify
 
 
 
-
-
-
+<img align="Center" height="250px"  src="https://user-images.githubusercontent.com/85345738/138544385-c8faad0a-7010-4a83-ad22-e65fdbe575d1.png" />
 
 RBMs stacked over one another - Deep belief networks(DBN)
+
+<img align="Center" height="250px"  src="https://user-images.githubusercontent.com/85345738/138544379-c0ad2da0-6072-40b2-9a72-7c1dee5f28cc.png" />
 Deep Boltzmann machine not equal deep belief networks(extract more complex features)
