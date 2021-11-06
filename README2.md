@@ -137,7 +137,7 @@ Rbm class finishes here, now we will create an object of rbm clas and then train
     * In the beginning, the input is the same as the target.
     * X-visible nodes, that are at the start i.e, v0. 
 * Ph0,_ - to get this we will use sample_h method which we have created earlier (ph0,_ )-which means we just want the first element of the output not to include the Bernoulli samples.
-* Another for loop for k steps of contrastive divergence
+* Another for loop for k steps of contrastive divergence.
 
       Gibbs sampling consists of making the Gibbs chain of several round trips from the visible note to the hidden 
       note then from the hidden note the visible nodes’. In each round trip of this Gibbs chain of Gibbs sampling, 
@@ -168,55 +168,43 @@ In each epoch various minibatches are trained. epoch is basically training the  
 
 ## Testing the RBM on testset
 
-Not use epochs, the batch size they were specific to training only so remove all terms related to those
+* We will copy and edit the training RBM codes.
 
-Vt- target, original ratings of the user in the test set
-V- 
+We do not use epochs, the batch size as they were specific to training only. So, remove all terms related to those.
 
-  get the output.
+> - Vt- target, original ratings of the user in the test_set.
+> - V- input, initial ratings of the user present in the training_set.
 
-Right now the training set contains the ratings of the training set and it doesn't contain the answers of the test set.
+* Initially, the training_set contains the ratings of the training_set and it doesn't contain the ratings of the test_set. 
 
-But, by using the inputs of the training set we will activate the neurons of our RBM to predict the ratings of the movies that were not rated yet, and that is the ratings of the test set.
+    **In test_set the user have rated some of the movies that were rated by the user in the training_set.** 
 
-So we need this as input to get the predicted ratings of the test set.
-Because we are getting these predicted ratings from the inputs of the training set
-that are used to activate the neurons of our RBM.
+    * By using the inputs of the training set we will activate the neurons of our RBM to predict the ratings of the movies that were not rated yet, and that is the ratings of the test set.
+    * So we need this as input to get the predicted ratings of the test set. Because we are getting these predicted ratings from the inputs of the training set that are used to activate the neurons of our RBM.
+    * we are using the inputs of the training set to activate the neurons of the RBM to get the predicted ratings of the test set.
 
-we are using the inputs of the training set to activate the neurons of the RBM to get the predicted ratings of the test set.
+* We need to take one step rather than 10 steps of contrastive divergence.
 
-We need to take one step rather than 10 steps
+* If condiction (if len(vt[vt>=0]) > 0)
+              
+      >> An if condition because you know that's always the same idea we want to test the predictions to the ratings of
+         the test set that actually exist.
+      >> You know, in the test set we still have some ratings that are existent in the test set but we also still have
+         some minus one ratings.
+      >> So the minus one are ratings that just never happened.
+      >> Whether it was in the training set or in the test set.
+      >> And we don't want to consider these ratings in the test set, of course, that's always the same id.
+      >> So, we are making this if condition to filter these non-existent ratings of the test set.
 
-Rating 
+* vk[v0<0] = v0[v0<0] We remove it becoz no training so  longer reqiured.
 
- an if condition
-because you know that's always the same idea we want to test
-the predictions to the ratings of the test set
-that actually exist.
-You know, in the test set we still have some ratings
-that are existent in the test set
-but we also still have some minus one ratings.
-So the minus one are ratings that just never happened.
-Whether it was in the training set or in the test set.
-And we don't want to consider these ratings in the test set,
-of course, that's always the same id.
+      phk,_ = rbm.sample_h(vk)
+      rbm.train(v0, vk, ph0, phk)
+Now, as we are not doing training so no need to update the weights so let’s get rid of the above codes.
 
+* in test_loss, vt>=0 -- we are getting the indexes that have existent ratings.
 
- so we are making this if condition
-to filter these non-existent ratings of the test set.
-vk[v0<0] = v0[v0<0
-We remove it becoz no training so  longer reqiured.
- 
- 
-phk,_ = rbm.sample_h(vk)
-    rbm.train(v0, vk, ph0, phk)
+* **V0- target isnt changed**
+* **Vk- fianl input after k samplng**
 
-Now as we are not doing training so no need to update the weights so let’s get rid of them
-
-vt>=0, we are getting the indexes that have existent ratings
-
-
-V0- target isnt changed
-Vk-fianl input after k samplng
-
-Out of 4, we are predicting 3 correctly.
+Out of 4, we are predicting 3 correctly as we got an test_loss of 0.2359 i.e, approx.-- 0.25.
